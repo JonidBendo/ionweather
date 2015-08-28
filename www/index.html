@@ -1,0 +1,88 @@
+<html ng-app="ionic.weather">
+  <head>
+    <meta charset="utf-8">
+    <title>Weather</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="lib/css/ionic.css">
+
+    <link rel="stylesheet" href="css/app.css">
+    <link href="lib/ionic-datepicker/dist/style.css" rel="stylesheet">
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDC5bKYpGpjPNYh2HmekEMd0ulQe0gF63A"></script>
+    <script src="lib/js/ionic.bundle.js"></script>
+    <script src="lib/js/angular/angular-resource.js"></script>
+
+    <script src="js/services.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/app.js"></script>
+    <script src="lib/ionic-datepicker/dist/templates.js"></script>
+    <script src="lib/ionic-datepicker/dist/ionic-datepicker.js"></script>
+<!--    <script src="cordova.js"></script> -->
+  </head>
+
+  <body ng-controller="WeatherCtrl">
+    <ion-pane id="wrapper">
+      <background-cycler class="bg-fade"></background-cycler>
+
+      <ion-header-bar id="header" class="bar bar-header bar-clear">
+        <h1 class="title">
+          <span class="city"><i id="city-nav-icon" class="icon ion-navigate"></i> {{currentLocationString}}</span><br>
+          <current-time localtz="current.local_tz_short"></current-time>
+        </h1>
+        <button ng-click="showSettings()" class="button button-icon"><i class="icon ion-gear-a"></i></button>
+      </ion-header-bar>
+
+      <ion-content scroll-event-interval="20" scroll-effects scrollbar-y="false" class="no-header">
+        <ion-refresher on-refresh="refresh()"></ion-refresher>
+        <div id="main-content">
+          <current-weather></current-weather>
+          <forecast></forecast>
+          <div id="map" data-tap-disabled="true"></div>
+        </div>
+      </ion-content>
+    </ion-pane>
+
+
+    <script id="settings.html" type="text/ng-template">
+      <div id="settings-modal" class="modal" ng-controller="SettingsCtrl">
+        <ion-header-bar class="bar bar-header bar-dark">
+          <h1 class="title">Settings</h1>
+          <button class="button button-clear" ng-click="closeSettings()">Close</button>
+        </ion-header-bar>
+        <ion-content has-header="true">
+          <div class="padding">
+            <div class="list">
+              <label class="item item-input">
+                <span class="input-label">Units</span>
+
+                <ion-radio-buttons>
+                  <button class="button button-positive button-radio"  ng-click="changeUnits('us')">&deg;F</button>
+                  <button class="button button-positive button-radio"  ng-click="changeUnits('si')">&deg;C</button>
+                </ion-radio-buttons>
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Select City</span>
+
+                  <ion-select ng-repeat="city in cities">
+                    <button class="button button-positive button-radio" ng-click="changeCity('{{city.id}}')">
+                      {{city.name}}
+                    </button>
+                  </ion-select>
+              </label>
+              <label class="item item-input">
+                <span class="input-label">Select Date</span>
+
+                <ionic-datepicker idate="currentDate" disablepreviousdates="true"  disablefuturedates="false" callback="datePickerCallback" disableddates="disabledDates" title="title" mondayfirst="true">
+                  <button class="button button-block button-positive"> {{ currentDate | date:'dd - MMMM - yyyy' }} </button>
+                </ionic-datepicker>
+              </label>
+            </div>
+          </div>
+        </ion-content>
+      </div>
+    </script>
+  </body>
+</html>

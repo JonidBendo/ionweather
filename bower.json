@@ -1,0 +1,28 @@
+{
+  "name": "ionic-weather",
+  "version": "0.0.1",
+  "authors": [
+    "Jonid Bendo <jonid.bendo@gmail.com>"
+  ],
+  "description": "ionic weather application",
+  "main": "index.html",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "homepage": "https://www.jonidbendo.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ionic-datepicker": "~0.6.0"
+  },
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.0.1"
+  }
+}
